@@ -19,6 +19,8 @@ struct ContentView: View {
             }
         }
         .foregroundColor(.orange)
+        .padding()
+        .font(emojiGame.cards.count < 5 ? .largeTitle : .title)
     }
 }
 
@@ -29,12 +31,13 @@ struct CardView: View {
             if card.isFaceUp {
                 RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3.0)
                 RoundedRectangle(cornerRadius: 10.0).fill(Color.white)
-                Text(card.content).font(Font.largeTitle)
+                Text(card.content)
             }
             else {
                 RoundedRectangle(cornerRadius: 10.0).fill()
             }
         }
+        .aspectRatio(2/3, contentMode: .fit)
     }
 }
 

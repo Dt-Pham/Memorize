@@ -11,8 +11,8 @@ class EmojiMemoryGame {
     private var game: MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
     
     static func createMemoryGame() -> MemoryGame<String> {
-        let emojis = ["👻", "🎃", "🕷"]
-        return MemoryGame<String>(numberOfPairsOfCards: emojis.count, createContent: { index in
+        let emojis = ["👻", "🎃", "🕷", "🍭", "🍫"]
+        return MemoryGame<String>(numberOfPairsOfCards: Int.random(in: 2...5), createContent: { index in
             emojis[index];
         })
     }
@@ -21,6 +21,7 @@ class EmojiMemoryGame {
     var cards: Array<MemoryGame<String>.Card> {
         game.cards
     }
+    
     
     // MARK: - Intent(s)
     func choose(card: MemoryGame<String>.Card) {

@@ -20,24 +20,33 @@ struct ContentView: View {
         }
         .foregroundColor(.orange)
         .padding()
-        .font(emojiGame.cards.count < 5 ? .largeTitle : .title)
     }
 }
 
 struct CardView: View {
     var card: MemoryGame<String>.Card
     var body: some View {
-        ZStack() {
-            if card.isFaceUp {
-                RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3.0)
-                RoundedRectangle(cornerRadius: 10.0).fill(Color.white)
-                Text(card.content)
+        GeometryReader { geometry in
+            ZStack() {
+                if card.isFaceUp {
+                    RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: lineWidth)
+                    RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
+                    Text(card.content)
+                }
+                else {
+                    RoundedRectangle(cornerRadius: cornerRadius).fill()
+                }
             }
-            else {
-                RoundedRectangle(cornerRadius: 10.0).fill()
-            }
+            .font(Font.system(size: fontSize(geometry.size)))
         }
         .aspectRatio(2/3, contentMode: .fit)
+    }
+    
+    // MARKS: - Drawing constants
+    let cornerRadius: CGFloat = 10
+    let lineWidth: CGFloat = 3
+    func fontSize(_ size: CGSize) -> CGFloat {
+        return min(size.width, size.height) * 0.75
     }
 }
 

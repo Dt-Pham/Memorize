@@ -11,15 +11,13 @@ struct ContentView: View {
     @ObservedObject var emojiGame: EmojiMemoryGame
     
     var body: some View {
-        HStack() {
-            ForEach(emojiGame.cards) { card in
-                CardView(card: card).onTapGesture(perform: {
-                    emojiGame.choose(card: card)
-                })
-            }
+        Grid(items: emojiGame.cards) { card in
+            CardView(card: card).onTapGesture(perform: {
+                emojiGame.choose(card: card)
+            })
+            .padding(5)
+            .foregroundColor(.orange)
         }
-        .foregroundColor(.orange)
-        .padding()
     }
 }
 
@@ -39,7 +37,7 @@ struct CardView: View {
             }
             .font(Font.system(size: fontSize(geometry.size)))
         }
-        .aspectRatio(2/3, contentMode: .fit)
+        .aspectRatio(1, contentMode: .fit)
     }
     
     // MARKS: - Drawing constants

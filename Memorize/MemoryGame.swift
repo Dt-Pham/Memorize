@@ -5,10 +5,13 @@
 //  Created by Duong Pham on 12/25/20.
 //
 
-import Foundation
+import SwiftUI
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     var cards: [Card]
+    var themeName: String
+    var themeColor: Color
+    
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
             cards.indices.filter { cards[$0].isFaceUp }.only
@@ -20,7 +23,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
-    init(numberOfPairsOfCards: Int, createContent: (Int) -> CardContent) {
+    init(themeName: String, themeColor: Color, numberOfPairsOfCards: Int, createContent: (Int) -> CardContent) {
         cards =	Array<Card>()
         for index in (0..<numberOfPairsOfCards) {
             let content = createContent(index)
@@ -28,6 +31,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content, id: index*2+1))
         }
         cards.shuffle()
+        self.themeName = themeName
+        self.themeColor = themeColor
     }
     
     mutating func choose(card: Card) {

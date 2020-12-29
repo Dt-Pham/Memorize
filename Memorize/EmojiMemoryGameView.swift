@@ -13,6 +13,7 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         Group {
             Text(emojiGame.themeName).font(.largeTitle)
+            Text("Score: \(emojiGame.score)")
             Button("New Game") { emojiGame.newGame() }
             Grid(items: emojiGame.cards) { card in
                 CardView(card: card).onTapGesture(perform: {

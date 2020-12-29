@@ -11,6 +11,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     var cards: [Card]
     var themeName: String
     var themeColor: Color
+    var score: Int
     
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
@@ -33,6 +34,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         cards.shuffle()
         self.themeName = themeName
         self.themeColor = themeColor
+        self.score = 0
     }
     
     mutating func choose(card: Card) {
@@ -45,8 +47,19 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 if (cards[chosenIndex].content == cards[potenialMatchedIndex].content) {
                     cards[chosenIndex].isMatched = true
                     cards[potenialMatchedIndex].isMatched = true
+                    score += 2
+                }
+                else {
+                    if cards[chosenIndex].isSeen {
+                        score -= 1
+                    }
+                    if cards[potenialMatchedIndex].isSeen {
+                        score -= 1
+                    }
                 }
                 cards[chosenIndex].isFaceUp = true
+                cards[chosenIndex].isSeen = true
+                cards[potenialMatchedIndex].isSeen = true
             }
             else {
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
@@ -58,6 +71,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     struct Card: Identifiable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
+        var isSeen: Bool = false
         var content: CardContent
         var id: Int
     }

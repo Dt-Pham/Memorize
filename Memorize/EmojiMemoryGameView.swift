@@ -34,6 +34,8 @@ struct CardView: View {
                 if card.isFaceUp {
                     RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: lineWidth)
                     RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
+                    Pie(startAngle: Angle.degrees(-90), endAngle: Angle.degrees(60), clockwise: true)
+                        .opacity(0.5).padding()
                     Text(card.content)
                 }
                 else {
@@ -50,7 +52,7 @@ struct CardView: View {
     private let cornerRadius: CGFloat = 10
     private let lineWidth: CGFloat = 3
     private func fontSize(_ size: CGSize) -> CGFloat {
-        return min(size.width, size.height) * 0.75
+        return min(size.width, size.height) * 0.6
     }
 }
 

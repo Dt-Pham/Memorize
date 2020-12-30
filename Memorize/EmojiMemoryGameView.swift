@@ -36,7 +36,7 @@ struct CardView: View {
                             .opacity(0.5).padding()
                         Text(card.content)
                 }
-                .modifier(Cardify(isFaceUp: card.isFaceUp))
+                .cardify(isFaceUp: card.isFaceUp)
                 .font(Font.system(size: fontSize(geometry.size)))
             }
         }

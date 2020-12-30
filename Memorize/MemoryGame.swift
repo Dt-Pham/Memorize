@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
-    var cards: [Card]
-    var themeName: String
-    var themeColor: Color
-    var score: Int
+    private(set) var cards: [Card]
+    private(set) var themeName: String
+    private(set) var themeColor: Color
+    private(set) var score: Int
     
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
@@ -38,7 +38,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     mutating func choose(card: Card) {
-        print("Card chosen: \(card)")
+        // 1print("Card chosen: \(card)")
         if let chosenIndex = cards.firstIndex(matching: card), !cards[chosenIndex].isMatched, !cards[chosenIndex].isFaceUp {
             if let potenialMatchedIndex = indexOfTheOneAndOnlyFaceUpCard {
                 print(cards[potenialMatchedIndex].content)

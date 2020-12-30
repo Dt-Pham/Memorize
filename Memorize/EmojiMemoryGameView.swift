@@ -47,9 +47,9 @@ struct CardView: View {
     }
     
     // MARKS: - Drawing constants
-    let cornerRadius: CGFloat = 10
-    let lineWidth: CGFloat = 3
-    func fontSize(_ size: CGSize) -> CGFloat {
+    private let cornerRadius: CGFloat = 10
+    private let lineWidth: CGFloat = 3
+    private func fontSize(_ size: CGSize) -> CGFloat {
         return min(size.width, size.height) * 0.75
     }
 }

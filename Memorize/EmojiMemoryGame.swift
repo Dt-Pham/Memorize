@@ -54,11 +54,6 @@ class EmojiMemoryGame: ObservableObject {
         })
     }
     
-    func newGame() {
-        let randomTheme = Theme.allCases.randomElement()!
-        game = EmojiMemoryGame.createMemoryGame(theme: randomTheme)
-    }
-    
     // MARK: - Access
     var cards: Array<MemoryGame<String>.Card> {
         game.cards
@@ -77,6 +72,11 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     // MARK: - Intent(s)
+    func newGame() {
+        let randomTheme = Theme.allCases.randomElement()!
+        game = EmojiMemoryGame.createMemoryGame(theme: randomTheme)
+    }
+    
     func choose(card: MemoryGame<String>.Card) {
         game.choose(card: card)
     }

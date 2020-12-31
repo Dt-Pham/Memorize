@@ -14,7 +14,11 @@ struct EmojiMemoryGameView: View {
         Group {
             Text(emojiGame.themeName).font(.largeTitle)
             Text("Score: \(emojiGame.score)")
-            Button("New Game") { emojiGame.newGame() }
+            Button("New Game") {
+                withAnimation(.easeInOut) {
+                    emojiGame.newGame()
+                }
+            }
             Grid(items: emojiGame.cards) { card in
                 CardView(card: card).onTapGesture(perform: {
                     emojiGame.choose(card: card)

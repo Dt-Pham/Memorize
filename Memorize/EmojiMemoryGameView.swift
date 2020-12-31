@@ -26,15 +26,17 @@ struct EmojiMemoryGameView: View {
     }
 }
 
-struct CardView: View {
+struct CardView: View, Animatable {
     var card: MemoryGame<String>.Card
     var body: some View {
         GeometryReader { geometry in
             if !card.isMatched || card.isFaceUp {
                 ZStack {
-                        Pie(startAngle: Angle.degrees(-90), endAngle: Angle.degrees(60), clockwise: true)
-                            .opacity(0.5).padding()
-                        Text(card.content)
+                    Pie(startAngle: Angle.degrees(-90), endAngle: Angle.degrees(60), clockwise: true)
+                        .opacity(0.5).padding()
+                    Text(card.content)
+                        .rotationEffect(card.isMatched ? Angle.degrees(360) : Angle.degrees(0))
+                        .animation(card.isMatched ? Animation.linear(duration: 1).repeatForever(autoreverses: false) : .default)
                 }
                 .cardify(isFaceUp: card.isFaceUp)
                 .font(Font.system(size: fontSize(geometry.size)))

@@ -20,9 +20,11 @@ struct EmojiMemoryGameView: View {
                 }
             }
             Grid(items: emojiGame.cards) { card in
-                CardView(card: card).onTapGesture(perform: {
-                    emojiGame.choose(card: card)
-                })
+                CardView(card: card).onTapGesture {
+                    withAnimation(Animation.linear(duration: 1)) {
+                        emojiGame.choose(card: card)
+                    }
+                }
                 .padding(5)
             }
         }
@@ -44,6 +46,7 @@ struct CardView: View, Animatable {
                 }
                 .cardify(isFaceUp: card.isFaceUp)
                 .font(Font.system(size: fontSize(geometry.size)))
+                .transition(AnyTransition.scale)
             }
         }
     }

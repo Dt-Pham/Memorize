@@ -38,12 +38,13 @@ struct Cardify: AnimatableModifier {
             RoundedRectangle(cornerRadius: cornerRadius).fill()
                 .opacity(isFaceUp ? 0 : 1)
         }
-        .rotation3DEffect(Angle.degrees(rotation), axis: (0, 1, 0))
+        .rotation3DEffect(Angle.degrees(rotation), axis: yAxis)
     }
     
     // MARK: - Drawing constants
     private let cornerRadius: CGFloat = 10
     private let lineWidth: CGFloat = 3
+    private let yAxis : (CGFloat, CGFloat, CGFloat) = (0, 1, 0)
 }
 
 extension View {

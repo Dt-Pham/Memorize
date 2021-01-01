@@ -21,15 +21,19 @@ struct EmojiMemoryGameView: View {
             }
             Grid(items: emojiGame.cards) { card in
                 CardView(card: card).onTapGesture {
-                    withAnimation(Animation.linear(duration: 1)) {
+                    withAnimation(Animation.linear(duration: flippingDuration)) {
                         emojiGame.choose(card: card)
                     }
                 }
-                .padding(5)
+                .padding(paddingLength)
             }
         }
         .foregroundColor(emojiGame.themeColor)
     }
+    
+    // MARK: - Drawing constants
+    private let flippingDuration: TimeInterval = 0.75
+    private let paddingLength: CGFloat = 5
 }
 
 struct CardView: View, Animatable {
@@ -50,19 +54,19 @@ struct CardView: View, Animatable {
                 ZStack {
                     Group {
                         if card.isConsumingBonusTime {
-                            Pie(startAngle: Angle.degrees(-90), endAngle: Angle.degrees(-animatedBonusRemaining * 360 - 90), clockwise: true)
+                            Pie(startAngle: Angle.degrees(startAngleOffset), endAngle: Angle.degrees(-animatedBonusRemaining * 360 + startAngleOffset), clockwise: true)
                                 .onAppear {
                                     startBonusTimeAnimation()
                                 }
                         }
                         else {
-                            Pie(startAngle: Angle.degrees(-90), endAngle: Angle.degrees(-card.bonusRemaining * 360 - 90), clockwise: true)
+                            Pie(startAngle: Angle.degrees(startAngleOffset), endAngle: Angle.degrees(-card.bonusRemaining * 360 + startAngleOffset), clockwise: true)
                         }
                     }
-                        .opacity(0.4).padding()
+                    .opacity(opacity).padding()
                     Text(card.content)
                         .rotationEffect(card.isMatched ? Angle.degrees(360) : Angle.degrees(0))
-                        .animation(card.isMatched ? Animation.linear(duration: 1).repeatForever(autoreverses: false) : .default)
+                        .animation(card.isMatched ? Animation.linear(duration: spinningDuration).repeatForever(autoreverses: false) : .default)
                 }
                 .cardify(isFaceUp: card.isFaceUp)
                 .font(Font.system(size: fontSize(geometry.size)))
@@ -72,6 +76,10 @@ struct CardView: View, Animatable {
     }
     
     // MARKS: - Drawing constants
+    private let opacity: Double = 0.4
+    private let spinningDuration: TimeInterval = 1
+    private let startAngleOffset: Double = -90
+    
     private func fontSize(_ size: CGSize) -> CGFloat {
         return min(size.width, size.height) * 0.6
     }

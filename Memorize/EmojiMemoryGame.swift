@@ -49,7 +49,7 @@ class EmojiMemoryGame: ObservableObject {
             emojis = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "💔", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝"]
             color = .red
         }
-        return MemoryGame<String>(themeName: name, themeColor: color, numberOfPairsOfCards: Int.random(in: 2...emojis.count), createContent: { index in
+        return MemoryGame<String>(themeName: name, themeColor: color, numberOfPairsOfCards: emojis.count, createContent: { index in
             emojis[index];
         })
     }

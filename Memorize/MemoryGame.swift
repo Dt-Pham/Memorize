@@ -7,11 +7,20 @@
 
 import SwiftUI
 
-struct MemoryGame<CardContent> where CardContent: Equatable {
+struct MemoryGame<CardContent>: Codable where CardContent: Equatable, CardContent: Codable {
     private(set) var cards: [Card]
     private(set) var themeName: String
-    private(set) var themeColor: Color
     private(set) var score: Int
+    private var rgbColor: UIColor.RGB
+    
+    private(set) var themeColor: Color {
+        get {
+            Color(rgbColor)
+        }
+        set {
+            rgbColor = UIColor(newValue).rgb
+        }
+    }
     
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
@@ -24,6 +33,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
+    var json: Data? {
+        try? JSONEncoder().encode(self)
+    }
+    
     init(themeName: String, themeColor: Color, numberOfPairsOfCards: Int, createContent: (Int) -> CardContent) {
         cards =	Array<Card>()
         for index in (0..<numberOfPairsOfCards) {
@@ -33,7 +46,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
         cards.shuffle()
         self.themeName = themeName
-        self.themeColor = themeColor
+        self.rgbColor = UIColor(themeColor).rgb
         self.score = 0
     }
     
@@ -68,7 +81,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         
     }
     
-    struct Card: Identifiable {
+    struct Card: Identifiable, Codable {
         var isFaceUp: Bool = false {
             didSet {
                 if isFaceUp {

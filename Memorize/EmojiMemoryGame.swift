@@ -75,6 +75,7 @@ class EmojiMemoryGame: ObservableObject {
     func newGame() {
         let randomTheme = Theme.allCases.randomElement()!
         game = EmojiMemoryGame.createMemoryGame(theme: randomTheme)
+        print("json = \(game.json?.utf8 ?? "nil")")
     }
     
     func choose(card: MemoryGame<String>.Card) {

@@ -90,9 +90,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C62203F725BE03650098AD6D /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				C68C598B259ABC5F00A93F38 /* GridLayout.swift */,
+				C68C5990259ABC7400A93F38 /* Grid.swift */,
+			);
+			path = Grid;
+			sourceTree = "<group>";
+		};
+		C62203F825BE038C0098AD6D /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				C68C599D259D0E9600A93F38 /* Cardify.swift */,
+				C68C5998259D0A0A00A93F38 /* Pie.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
+		C62203F925BE03B60098AD6D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C6DE31C5259660CA00E12599 /* EmojiMemoryGameView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		C6A829E625B4C13000C5CDB3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C62203F725BE03650098AD6D /* Grid */,
 				C68C597D259AB91200A93F38 /* ArrayExtensions.swift */,
 				C6A829DE25B3D65700C5CDB3 /* ColorExtension.swift */,
 				C6A829E725B4C18E00C5CDB3 /* DataExtension.swift */,
@@ -123,15 +150,12 @@
 		C6DE31C2259660CA00E12599 /* Memorize */ = {
 			isa = PBXGroup;
 			children = (
+				C6F71B1725BE04A10020CCB5 /* Models */,
+				C6F71B1625BE048B0020CCB5 /* ViewModels */,
+				C62203F925BE03B60098AD6D /* Views */,
+				C62203F825BE038C0098AD6D /* ViewModifiers */,
 				C6A829E625B4C13000C5CDB3 /* Extensions */,
-				C68C598B259ABC5F00A93F38 /* GridLayout.swift */,
-				C68C5990259ABC7400A93F38 /* Grid.swift */,
 				C6DE31C3259660CA00E12599 /* MemorizeApp.swift */,
-				C6DE31C5259660CA00E12599 /* EmojiMemoryGameView.swift */,
-				C68C599D259D0E9600A93F38 /* Cardify.swift */,
-				C605F60C259694ED00B0A57D /* MemoryGame.swift */,
-				C605F6112596961400B0A57D /* EmojiMemoryGame.swift */,
-				C68C5998259D0A0A00A93F38 /* Pie.swift */,
 				C6DE31C7259660CB00E12599 /* Assets.xcassets */,
 				C6DE31CC259660CB00E12599 /* Info.plist */,
 				C6DE31C9259660CB00E12599 /* Preview Content */,
@@ -163,6 +187,22 @@
 				C6DE31E2259660CB00E12599 /* Info.plist */,
 			);
 			path = MemorizeUITests;
+			sourceTree = "<group>";
+		};
+		C6F71B1625BE048B0020CCB5 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C605F6112596961400B0A57D /* EmojiMemoryGame.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C6F71B1725BE04A10020CCB5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C605F60C259694ED00B0A57D /* MemoryGame.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

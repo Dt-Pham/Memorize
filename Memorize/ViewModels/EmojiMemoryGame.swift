@@ -8,50 +8,16 @@
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
-    @Published private var game: MemoryGame<String> = EmojiMemoryGame.createMemoryGame(theme: .halloween)
+    @Published private var game: MemoryGame<String>
     
-    enum Theme: CaseIterable {
-        case halloween
-        case sport
-        case flower
-        case sweet
-        case horoscope
-        case heart
-    }
-    
-    static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
-        var emojis: [String]
-        var name: String
-        var color: Color
-        switch theme {
-        case .halloween:
-            name = "Halloween"
-            emojis = ["👻", "🎃", "🕷", "☠️", "💀", "😈"]
-            color = .orange
-        case .sport:
-            name = "Sport"
-            emojis = ["🥊", "🏊🏼‍♂️", "🤺", "⚽️", "🏓", "🎱", "🏀", "🏈", "🏸", "🏒", "⛳️"]
-            color = .green
-        case .flower:
-            name = "Flower"
-            emojis = ["💐", "🌷", "🌸", "🌹", "🌺", "🌻", "🌼", "🥀", "💮"]
-            color = .pink
-        case .sweet:
-            name = "Sweet"
-            emojis = ["🍩", "🍪", "🍫", "🍬", "🍭", "🥮", "🧁", "🍡", "🍨", "🍧"]
-            color = .yellow
-        case .horoscope:
-            name = "Horoscope"
-            emojis = ["♈️", "♉️", "♊️", "♋️", "♌️", "♍️", "♎️", "♏️", "♐️", "♑️", "♒️", "♓️"]
-            color = .purple
-        case .heart:
-            name = "Heart"
-            emojis = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "💔", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝"]
-            color = .red
-        }
-        return MemoryGame<String>(themeName: name, themeColor: color, numberOfPairsOfCards: emojis.count, createContent: { index in
-            emojis[index];
-        })
+    init(theme: Theme) {
+        let emojis = theme.emojis.map {String($0)}
+        game = MemoryGame<String>(
+            themeName: theme.name,
+            themeColor: Color(theme.color),
+            numberOfPairsOfCards: emojis.count,
+            createContent: { index in emojis[index] }
+        )
     }
     
     // MARK: - Access
@@ -73,9 +39,9 @@ class EmojiMemoryGame: ObservableObject {
     
     // MARK: - Intent(s)
     func newGame() {
-        let randomTheme = Theme.allCases.randomElement()!
-        game = EmojiMemoryGame.createMemoryGame(theme: randomTheme)
-        print("json = \(game.json?.utf8 ?? "nil")")
+//        let randomTheme = Theme.allCases.randomElement()!
+//        game = EmojiMemoryGame.createMemoryGame(theme: randomTheme)
+//        print("json = \(game.json?.utf8 ?? "nil")")
     }
     
     func choose(card: MemoryGame<String>.Card) {

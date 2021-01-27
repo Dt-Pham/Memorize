@@ -10,8 +10,9 @@ import SwiftUI
 @main
 struct MemorizeApp: App {
     var body: some Scene {
+        let store = EmojiMemoryGameStore()
         WindowGroup {
-            EmojiMemoryThemeChooser()
+            EmojiMemoryThemeChooser().environmentObject(store)
         }
     }
 }

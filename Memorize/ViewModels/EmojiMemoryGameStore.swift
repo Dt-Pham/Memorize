@@ -6,30 +6,60 @@
 //
 
 import SwiftUI
+import Combine
 
 class EmojiMemoryGameStore: ObservableObject {
-    @Published var themes = [Theme: String]()
+    let name: String
+    @Published var themes = [Theme]()
     
-    init() {
-//        let defaultKey = "EmojiMemoryGame"
+    func name(for theme: Theme) -> String {
+        theme.name
+    }
+    
+    func setName(_ name: String, for theme: Theme) {
+        let id = themes.firstIndex(matching: theme)
+        assert(id != nil)
+        themes[id!].name = name
+    }
+    
+    func addTheme(named name: String = "Nameless Theme") {
+        themes.append(Theme())
+    }
+
+    func removeTheme(_ theme: Theme) {
+        let id = themes.firstIndex(matching: theme)
+        assert(id != nil)
+        themes.remove(at: id!)
+    }
+    
+    private var autosave: AnyCancellable?
+    
+    init(named name: String = "Emoji Memory Game") {
+        self.name = name
+        let defaultKey = "EmojiMemoryGameStore.\(name)"
+        themes = Array(fromPropertyList: UserDefaults.standard.object(forKey: defaultKey))
         
+        autosave = $themes.sink { names in
+            UserDefaults.standard.set(names.asPropertyList, forKey: defaultKey)
+        }
     }
 }
 
-//extension Dictionary where Key == Theme, Value == String {
-//    var asPropertyList: [String:String] {
-//        var uuidToName = [String:String]()
-//        for (key, value) in self {
-//            uuidToName[key.id.uuidString] = value
-//        }
-//        return uuidToName
-//    }
-//
-//    init(fromPropertyList plist: Any?) {
-//        self.init()
-//        let uuidToName = plist as? [String:String] ?? [:]
-//        for uuid in uuidToName.keys {
-//            self[EmojiArtDocument(id: UUID(uuidString: uuid))] = uuidToName[uuid]
-//        }
-//    }
-//}
+extension Array where Element == Theme {
+    var asPropertyList: [Data?] {
+        var pList = [Data?]()
+        for theme in self {
+            pList.append(theme.json)
+        }
+        return pList
+    }
+    
+    init(fromPropertyList plist: Any?) {
+        self.init()
+        let data = plist as? [Data?] ?? []
+        for json in data {
+            let theme = Theme(json: json)!
+            self.append(theme)
+        }
+    }
+}

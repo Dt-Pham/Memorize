@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct Theme: Codable, Hashable, Identifiable {
     var name: String
@@ -22,7 +23,7 @@ struct Theme: Codable, Hashable, Identifiable {
         }
     }
     
-    init(name: String, emojis: String, color: Color) {
+    init(name: String = "Unnamed", emojis: String = "🐤😄🇹🇴", color: Color = .black) {
         self.name = name
         self.emojis = emojis
         self.color = UIColor(color).rgb

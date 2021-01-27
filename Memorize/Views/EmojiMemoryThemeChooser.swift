@@ -10,32 +10,39 @@ import SwiftUI
 struct EmojiMemoryThemeChooser: View {
     @EnvironmentObject var store: EmojiMemoryGameStore
     @State private var editMode: EditMode = .inactive
-
+    @State private var showAddThemePopup = false
+        
     var body: some View {
-        var themes = [Theme]()
-        themes.append(.flags)
-        themes.append(.faces)
-        themes.append(.places)
-        themes.append(.weather)
         return NavigationView {
             List {
                 ForEach(store.themes) { theme in
                     ThemePreview(theme: theme, isEditing: editMode.isEditing)
                 }
+                .onDelete { indexSet in
+                    indexSet.map { store.themes[$0] }.forEach { theme in
+                        store.removeTheme(theme)
+                    }
+                }
             }
             .animation(.none)
             .navigationTitle("Memorize")
             .navigationBarItems(
-                leading: Button(action: {
-                    print("Add new theme")
-                    store.addTheme()
-                }, label: {
-                    Image(systemName: "plus")
-                }),
+                leading: addThemeButton,
                 trailing: EditButton()
             )
             .environment(\.editMode, $editMode)
         }
+    }
+    
+    var addThemeButton: some View {
+        Button(action: {
+            print("Add new theme")
+            showAddThemePopup = true
+        }, label: {
+            Image(systemName: "plus")
+        })
+          
+        
     }
 }
 

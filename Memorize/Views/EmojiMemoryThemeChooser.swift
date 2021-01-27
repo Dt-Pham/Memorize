@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EmojiMemoryThemeChooser: View {
+    @Environment(\.presentationMode) var presentation
     @EnvironmentObject var store: EmojiMemoryGameStore
     @State private var editMode: EditMode = .inactive
     @State private var showAddThemePopup = false
@@ -40,9 +41,19 @@ struct EmojiMemoryThemeChooser: View {
             showAddThemePopup = true
         }, label: {
             Image(systemName: "plus")
-        })
-          
-        
+        }).popover(isPresented: $showAddThemePopup) {
+            let defaultThemes: [Theme] = [.flags, .faces, .places, .vehicles, .weather]
+            List {
+                ForEach(defaultThemes) { theme in
+                    ThemePreview(theme: theme, isEditing: false)
+                        .onTapGesture {
+                            store.addTheme(theme)
+                            presentation.wrappedValue.dismiss()
+                            showAddThemePopup = false
+                        }
+                }
+            }
+        }
     }
 }
 

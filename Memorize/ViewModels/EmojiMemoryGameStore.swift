@@ -25,6 +25,10 @@ class EmojiMemoryGameStore: ObservableObject {
     func addTheme(named name: String = "Nameless Theme") {
         themes.append(Theme())
     }
+    
+    func addTheme(_ theme: Theme) {
+        themes.append(theme)
+    }
 
     func removeTheme(_ theme: Theme) {
         let id = themes.firstIndex(matching: theme)
